@@ -4,6 +4,7 @@
 
 - [概要](#概要)
 - [技術スタック](#技術スタック)
+- [ディレクトリ構成](#ディレクトリ構成)
 - [開発の始め方](#開発の始め方)
 
 ## 概要
@@ -19,6 +20,31 @@
 - pnpm：パッケージ管理
 - Prettier / prettier-plugin-astro：コード整形
 - Husky / lint-staged：コミット時に変更ファイルを自動整形
+
+## ディレクトリ構成
+
+```text
+src/
+├── assets/              # コンポーネントから読み込む画像・SVG
+├── components/
+│   ├── Header/          # サイト共通のヘッダー
+│   ├── Footer/          # サイト共通のフッター
+│   ├── feature/         # 状態や操作を持つ機能単位のUI（Counterなど）
+│   └── ui/              # 再利用する基本UI（Buttonなど）
+│       └── Button/
+│           ├── index.tsx        # Propsの型定義とコンポーネント本体
+│           └── index.module.css # Button専用のスタイル
+├── layouts/             # 各ページで使う共通レイアウト
+├── pages/               # URLに対応するAstroページ、404・500ページ
+└── styles/              # カラーパレットや文字設定などの共通CSS
+public/                  # faviconなど、そのまま配信する静的ファイル
+```
+
+ページは `.astro`、Reactコンポーネントは各ディレクトリの `index.tsx` に記述します。
+コンポーネント固有のCSSは `index.module.css` に置きます（現在はButtonで使用）。
+
+ブラウザでの操作が必要なReactコンポーネントには、Astro側で `client:*` を指定します（現在はCounterに `client:visible` を指定）。
+ですが初期読み込みの負荷を抑えるためにもできるだけ、client:loadは使わないようにしましょう。
 
 ## 開発の始め方
 
