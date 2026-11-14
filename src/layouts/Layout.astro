@@ -1,11 +1,11 @@
 ---
 import "../styles/global.css";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/features/Header/index.astro";
+import Footer from "../components/features/Footer/index.astro";
 ---
 
 <!doctype html>
-<html lang="jp">
+<html lang="ja">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -14,9 +14,9 @@ import Footer from "../components/Footer";
     <meta name="generator" content={Astro.generator} />
     <title>TSkaigi 2027 ティザーサイト</title>
   </head>
-  <Header />
   <body>
+    <Header />
     <slot />
+    <Footer />
   </body>
-  <Footer />
 </html>

@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Counter from "../components/feature/Counter";
+import Counter from "../components/features/islands/Counter";
 ---
 
 <Layout>
@@ -16,9 +16,6 @@ import Counter from "../components/feature/Counter";
       </li>
       <li>
         <a href="/404/">404 error page</a>
-      </li>
-      <li>
-        <a href="/500/">500 error page</a>
       </li>
     </ul>
     <Counter client:visible />
