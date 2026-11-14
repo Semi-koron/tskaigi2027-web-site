@@ -1,10 +1,11 @@
 :root {
   --color-primary: #1457db;
-  --color-link: --color-background: #ffffff;
+  --color-link: #253edf;
+  --color-background: #ffffff;
   --color-text: #0a0a0b;
   --color-text-muted: #6b7280;
   --color-background: #ffffff;
-  --color-footer-background: liner-gradient(#3a89c4, #1071d3);
+  --color-footer-background: linear-gradient(#3a89c4, #1071d3);
 }
 
 html,
