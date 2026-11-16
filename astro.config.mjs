@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 
 import react from "@astrojs/react";
 
@@ -14,4 +14,14 @@ export default defineConfig({
   base,
   output: "static",
   integrations: [react()],
+  env: {
+    schema: {
+      // PR プレビューを検索エンジンに載せないためのフラグ（preview.yml で true にする）
+      NOINDEX: envField.boolean({
+        context: "server",
+        access: "public",
+        default: false,
+      }),
+    },
+  },
 });

@@ -38,6 +38,7 @@ jobs:
         if: github.event.action != 'closed'
         env:
           BASE_PATH: /${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.number }}
+          NOINDEX: true
 
       # opened / synchronize で配置，closed で削除し，PR に URL をコメントする
       - uses: rossjrw/pr-preview-action@v1

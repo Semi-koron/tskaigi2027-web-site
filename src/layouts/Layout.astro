@@ -1,4 +1,5 @@
 ---
+import { NOINDEX } from "astro:env/server";
 import { withBase } from "../utils/url";
 import "../styles/global.css";
 import Header from "../components/features/Header/index.astro";
@@ -13,6 +14,7 @@ import Footer from "../components/features/Footer/index.astro";
     <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
     <link rel="icon" href={withBase("/favicon.ico")} />
     <meta name="generator" content={Astro.generator} />
+    {NOINDEX && <meta name="robots" content="noindex, nofollow" />}
     <title>TSkaigi 2027 ティザーサイト</title>
   </head>
   <body>
