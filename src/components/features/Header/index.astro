@@ -1,1 +1,36 @@
-<header>TSkaigi 2027 test header</header>
+---
+import Image from "astro/components/Image.astro";
+import tsKaigiImage from "../../../assets/TSkaigi.png";
+---
+
+<header>
+  <Image src={tsKaigiImage} alt={"TSKaigiロゴ画像"} height={31} />
+  <ul>
+    <li>
+      <a href="/side-event/">サイドイベント</a>
+    </li>
+    <li>
+      <a href="/code-of-conduct/">行動規範</a>
+    </li>
+  </ul>
+</header>
+<style>
+  header {
+    background-color: var(--color-header-background);
+    color: var(--color-text);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    margin-left: 1rem;
+  }
+</style>

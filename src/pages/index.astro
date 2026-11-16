@@ -4,7 +4,7 @@ import Counter from "../components/features/islands/Counter";
 ---
 
 <Layout>
-  <div>
+  <main>
     <h1>Hello, TSkaigi!</h1>
     <p>this page is home</p>
     <ul>
@@ -19,5 +19,14 @@ import Counter from "../components/features/islands/Counter";
       </li>
     </ul>
     <Counter client:visible />
-  </div>
+  </main>
 </Layout>
+<style>
+  main {
+    padding: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>

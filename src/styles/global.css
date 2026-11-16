@@ -2,6 +2,7 @@
   --color-primary: #1457db;
   --color-link: #253edf;
   --color-background: #ffffff;
+  --color-header-background: #ffffff;
   --color-text: #0a0a0b;
   --color-text-muted: #6b7280;
   --color-background: #ffffff;
@@ -15,7 +16,7 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   min-height: 100vh;
 }
@@ -54,6 +55,8 @@ p {
 
 a {
   color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 700;
 }
 
 li {
