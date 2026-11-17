@@ -1,32 +1,111 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Counter from "../components/features/islands/Counter";
+import CountdownTimer from "../components/features/islands/CountdownTimer";
+import Background from "../components/features/Background/index.astro";
+import Button from "../components/ui/Button";
+import HR from "../components/ui/HR/index.astro";
 ---
 
 <Layout>
   <main>
-    <h1>Hello, TSkaigi!</h1>
-    <p>this page is home</p>
-    <ul>
-      <li>
-        <a href="/side-event/">side event</a>
-      </li>
-      <li>
-        <a href="/code-of-conduct/">code of conduct</a>
-      </li>
-      <li>
-        <a href="/404/">404 error page</a>
-      </li>
-    </ul>
-    <Counter client:visible />
+    <section>
+      <Background />
+      <div class="countdown-timer">
+        <CountdownTimer client:visible />
+      </div>
+      <div class="date-location">
+        <div class="date">
+          <time datetime="2027-05-21">5/21,</time>
+          <time datetime="2027-05-21">5/22</time>
+        </div>
+        <p class="location">有明セントラルタワーホール＆カンファレンス</p>
+      </div>
+      <h1>TSKaigi 2027 Coming Soon</h1>
+      <p>Scroll</p>
+    </section>
+    <section>
+      <h2>プロポーザル募集</h2>
+      <HR />
+      <p>
+        私たちの願いは、フロントエンドからバックエンド、インフラに至るまで、多様な分野のTypeScriptエンジニアたちが集い、普段は交流の少ないエンジニアたちが、それぞれの得意分野や最新の知見を交換し合う交流の場を創り出すことです。
+        <br />
+        あなたの発表が、誰かのキャリア、あるいはプロジェクトに新たな光をもたらすかもしれません。
+        <br />
+        ぜひ一緒に日本のTypeScriptコミュニティを盛り上げましょう！
+      </p>
+
+      <Button>応募する</Button>
+    </section>
+    <section>
+      <h2>スポンサー募集開始</h2>
+      <HR />
+      <p>
+        TypeScriptコミュニティの発展に共に取り組んでいただけるスポンサー企業を募集いたします。
+        <br />
+        希望される企業様はスポンサー向け資料をご確認の上、お申し込みください。
+      </p>
+
+      <Button>TSkaigi 2027 協賛のご案内</Button>
+    </section>
   </main>
 </Layout>
 <style>
   main {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  section {
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 2.5rem;
+  }
+
+  time {
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  section {
+    padding: 2rem;
+  }
+
+  .location {
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .date {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .date-location {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+
+  .countdown-timer {
+    margin-top: 11rem;
+  }
+
+  @media (min-width: 768px) {
+  }
+
+  @media (min-width: 1024px) {
+    .countdown-timer {
+      margin-top: 13rem;
+    }
+
+    section {
+      max-width: 760px;
+    }
   }
 </style>
