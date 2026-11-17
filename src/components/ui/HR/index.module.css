@@ -1,0 +1,25 @@
+.parallelogram {
+  width: 33px;
+  height: 9px;
+  flex-shrink: 0;
+  margin: 24px auto;
+  padding: 0;
+  border: 0;
+  overflow: visible;
+  background: transparent;
+}
+
+.parallelogram::before {
+  content: "";
+  display: block;
+  width: calc(100% - 4.586px);
+  height: 100%;
+  margin-inline: auto;
+  background:
+    linear-gradient(#0c7edc, #0c7edc) 60.6061% 41.1765% / 26.6667% 39.2857%
+      no-repeat,
+    linear-gradient(#6bade8, #6bade8) 100% 0 / 55.5556% 64.2857% no-repeat,
+    linear-gradient(#ff86b9, #ff86b9) 37.5% 62.5% / 28.8889% 42.8571% no-repeat,
+    linear-gradient(#ffc0db, #ffc0db) 0 100% / 55.5556% 64.2857% no-repeat;
+  transform: skewX(-27deg);
+}
