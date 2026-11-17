@@ -1,0 +1,21 @@
+.divider {
+  flex-shrink: 0;
+  width: 1px;
+  height: 1rem;
+  margin-top: 1rem;
+  background: currentColor;
+  transform: rotate(15deg);
+}
+
+@media (min-width: 768px) {
+  .divider {
+    height: 1.75rem;
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .divider {
+    margin-top: 24px;
+  }
+}

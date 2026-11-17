@@ -1,0 +1,49 @@
+.time-left {
+  width: 100px;
+  min-width: 0;
+}
+
+.value {
+  font-family: var(--font-outfit);
+  font-style: normal;
+  display: block;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.75%;
+  font-variant-numeric: tabular-nums;
+}
+
+.unit {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+@media (min-width: 768px) {
+  .timer {
+    width: 600px;
+    height: 154px;
+  }
+
+  .time-left {
+    width: 100px;
+  }
+
+  .value {
+    font-size: 3rem;
+    font-weight: 300;
+  }
+}
+
+@media (min-width: 1024px) {
+  .timer {
+    width: 630px;
+    height: 182px;
+  }
+
+  .value {
+    font-size: 3.75rem;
+  }
+}
