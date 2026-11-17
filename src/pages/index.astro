@@ -4,6 +4,7 @@ import CountdownTimer from "../components/features/islands/CountdownTimer";
 import Background from "../components/features/Background/index.astro";
 import Button from "../components/ui/Button";
 import HR from "../components/ui/HR/index.astro";
+import UnderArrow from "../components/ui/UnderArrow/index.astro";
 ---
 
 <Layout>
@@ -21,7 +22,10 @@ import HR from "../components/ui/HR/index.astro";
         <p class="location">有明セントラルタワーホール＆カンファレンス</p>
       </div>
       <h1>TSKaigi 2027 Coming Soon</h1>
-      <p>Scroll</p>
+      <div class="scroll">
+        <p>Scroll</p>
+        <UnderArrow />
+      </div>
     </section>
     <section>
       <h2>プロポーザル募集</h2>
@@ -94,6 +98,18 @@ import HR from "../components/ui/HR/index.astro";
 
   .countdown-timer {
     margin-top: 11rem;
+  }
+
+  .scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--color-primary);
+  }
+  .scroll p {
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
   }
 
   @media (min-width: 768px) {
