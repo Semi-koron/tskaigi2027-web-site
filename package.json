@@ -13,6 +13,7 @@
     "check": "astro check",
     "lint": "eslint .",
     "preview": "astro preview",
+    "test": "node --test 'src/**/*.test.ts' 'scripts/**/*.test.ts'",
     "astro": "astro",
     "format": "pnpm exec prettier . --write",
     "format:check": "prettier . --check",
