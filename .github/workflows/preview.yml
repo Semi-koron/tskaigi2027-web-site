@@ -11,6 +11,8 @@ permissions:
 concurrency:
   group: gh-pages
   cancel-in-progress: false
+  # 既定では待機できるのは1件で，後続に押し出された本番デプロイがキャンセルされるため
+  queue: max
 
 jobs:
   preview:
@@ -19,6 +21,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          # contents: write のトークンを依存パッケージのコードから使わせない
+          persist-credentials: false
 
       - uses: pnpm/action-setup@v6
         if: github.event.action != 'closed'
