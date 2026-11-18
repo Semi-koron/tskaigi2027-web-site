@@ -2,21 +2,14 @@ import { Divider } from "./Divider";
 import { TimeLeft } from "./TimeLeft";
 import { useCountdownTimer } from "./hooks/useCountdownTimer";
 import styles from "./index.module.css";
-
-type DurationDesignator = "D" | "H" | "M" | "S";
-
-type TimeUnitDefinition = {
-  key: string;
-  label: string;
-  designator: DurationDesignator;
-};
+import type { TimeUnit } from "./types/TimeUnit";
 
 const TIME_UNITS = [
   { key: "days", label: "Days", designator: "D" },
   { key: "hours", label: "Hours", designator: "H" },
   { key: "minutes", label: "Minutes", designator: "M" },
   { key: "seconds", label: "Seconds", designator: "S" },
-] as const satisfies readonly TimeUnitDefinition[];
+] as const satisfies readonly TimeUnit[];
 
 export function CountdownTimer() {
   const { timeLeft } = useCountdownTimer();
@@ -33,10 +26,7 @@ export function CountdownTimer() {
       <div className={styles["values"]}>
         {TIME_UNITS.map((unit, index) => (
           <div key={unit.key} className={styles["time-unit"]}>
-            <TimeLeft
-              value={timeLeft[unit.key as keyof typeof timeLeft]}
-              unit={unit.label}
-            />
+            <TimeLeft timeUnit={unit} value={timeLeft[unit.key]} />
             {index < TIME_UNITS.length - 1 && <Divider />}
           </div>
         ))}
