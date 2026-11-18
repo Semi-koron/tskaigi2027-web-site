@@ -63,10 +63,6 @@
     width: 600px;
     height: 154px;
   }
-
-  .time-left {
-    width: 100px;
-  }
 }
 
 @media (min-width: 1024px) {
@@ -96,8 +92,4 @@
   .divider {
     margin-top: 16px;
   }
-
-  /* .values {
-    gap: 1.25rem;
-  } */
 }

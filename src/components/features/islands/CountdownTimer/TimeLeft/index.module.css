@@ -8,7 +8,7 @@
   font-style: normal;
   display: block;
   font-size: 2rem;
-  font-weight: 300;
+  font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.75%;
   font-variant-numeric: tabular-nums;
@@ -33,11 +33,6 @@
 }
 
 @media (min-width: 1024px) {
-  .timer {
-    width: 630px;
-    height: 182px;
-  }
-
   .value {
     font-size: 3.75rem;
   }
