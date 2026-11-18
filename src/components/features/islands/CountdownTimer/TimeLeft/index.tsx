@@ -3,13 +3,12 @@ import styles from "./index.module.css";
 type TimeLeftProps = {
   value: number;
   unit: string;
-  duration: string;
 };
 
-export function TimeLeft({ value, unit, duration }: TimeLeftProps) {
+export function TimeLeft({ value, unit }: TimeLeftProps) {
   return (
     <div className={styles["time-left"]}>
-      <time className={styles["value"]} dateTime={duration}>
+      <time className={styles["value"]} dateTime={`PT${value}${unit[0]}`}>
         {value}
       </time>
       <span className={styles["unit"]}>{unit}</span>

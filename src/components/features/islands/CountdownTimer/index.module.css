@@ -51,9 +51,11 @@
 .values {
   position: relative;
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
   max-width: 100%;
+}
+
+.time-unit {
+  display: flex;
 }
 
 @media (min-width: 768px) {
@@ -95,7 +97,7 @@
     margin-top: 16px;
   }
 
-  .values {
+  /* .values {
     gap: 1.25rem;
-  }
+  } */
 }

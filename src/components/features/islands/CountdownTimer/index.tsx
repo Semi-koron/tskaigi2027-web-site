@@ -3,6 +3,21 @@ import { TimeLeft } from "./TimeLeft";
 import { useCountdownTimer } from "./hooks/useCountdownTimer";
 import styles from "./index.module.css";
 
+type DurationDesignator = "D" | "H" | "M" | "S";
+
+type TimeUnitDefinition = {
+  key: string;
+  label: string;
+  designator: DurationDesignator;
+};
+
+const TIME_UNITS = [
+  { key: "days", label: "Days", designator: "D" },
+  { key: "hours", label: "Hours", designator: "H" },
+  { key: "minutes", label: "Minutes", designator: "M" },
+  { key: "seconds", label: "Seconds", designator: "S" },
+] as const satisfies readonly TimeUnitDefinition[];
+
 export function CountdownTimer() {
   const { timeLeft } = useCountdownTimer();
 
@@ -16,29 +31,15 @@ export function CountdownTimer() {
       <div className={styles["blue-glow"]} aria-hidden="true" />
       <div className={styles["grid"]} aria-hidden="true" />
       <div className={styles["values"]}>
-        <TimeLeft
-          value={timeLeft.days}
-          unit="Days"
-          duration={`P${timeLeft.days}D`}
-        />
-        <Divider />
-        <TimeLeft
-          value={timeLeft.hours}
-          unit="Hours"
-          duration={`PT${timeLeft.hours}H`}
-        />
-        <Divider />
-        <TimeLeft
-          value={timeLeft.minutes}
-          unit="Minutes"
-          duration={`PT${timeLeft.minutes}M`}
-        />
-        <Divider />
-        <TimeLeft
-          value={timeLeft.seconds}
-          unit="Seconds"
-          duration={`PT${timeLeft.seconds}S`}
-        />
+        {TIME_UNITS.map((unit, index) => (
+          <div key={unit.key} className={styles["time-unit"]}>
+            <TimeLeft
+              value={timeLeft[unit.key as keyof typeof timeLeft]}
+              unit={unit.label}
+            />
+            {index < TIME_UNITS.length - 1 && <Divider />}
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 .time-left {
-  width: 100px;
   min-width: 0;
+  margin: 0 1rem;
 }
 
 .value {
@@ -40,5 +40,9 @@
 
   .value {
     font-size: 3.75rem;
+  }
+
+  .time-left {
+    margin: 0 1.25rem;
   }
 }
