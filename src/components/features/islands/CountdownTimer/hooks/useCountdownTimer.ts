@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import type { TimeUnit } from "../types/TimeUnit";
+import { calcRemainingTime } from "../util/calcRemainingTime";
 
 const targetDate = import.meta.env.PUBLIC_COUNTDOWN_TARGET_DATE;
 
@@ -15,7 +17,7 @@ if (Number.isNaN(targetTime)) {
 }
 
 export const useCountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState({
+  const [timeLeft, setTimeLeft] = useState<Record<TimeUnit["key"], number>>({
     days: 0,
     hours: 0,
     minutes: 0,
@@ -27,12 +29,7 @@ export const useCountdownTimer = () => {
       const now = new Date();
       const difference = Math.max(0, targetTime - now.getTime());
 
-      setTimeLeft({
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      });
+      setTimeLeft(calcRemainingTime(difference));
     };
 
     calculateTimeLeft();
