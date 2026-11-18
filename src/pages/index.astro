@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../utils/url";
 import Layout from "../layouts/Layout.astro";
 import Counter from "../components/features/islands/Counter";
 ---
@@ -9,13 +10,13 @@ import Counter from "../components/features/islands/Counter";
     <p>this page is home</p>
     <ul>
       <li>
-        <a href="/side-event/">side event</a>
+        <a href={withBase("/side-event/")}>side event</a>
       </li>
       <li>
-        <a href="/code-of-conduct/">code of conduct</a>
+        <a href={withBase("/code-of-conduct/")}>code of conduct</a>
       </li>
       <li>
-        <a href="/404/">404 error page</a>
+        <a href={withBase("/404/")}>404 error page</a>
       </li>
     </ul>
     <Counter client:visible />
