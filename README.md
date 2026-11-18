@@ -47,7 +47,7 @@ src/
 │   ├── 404.astro        # 404ページ
 │   ├── code-of-conduct/
 │   │   └── index.astro
-│   └── side-event/
+│   └── side-events/
 │       └── index.astro
 └── styles/              # カラーパレットや文字設定などの共通CSS
 public/                  # faviconなど、そのまま配信する静的ファイル
