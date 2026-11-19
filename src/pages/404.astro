@@ -1,8 +1,9 @@
 ---
+import { withBase } from "../utils/url";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
   <h1>this is 404 error page</h1>
-  <a href="/">back to home</a>
+  <a href={withBase("/")}>back to home</a>
 </Layout>

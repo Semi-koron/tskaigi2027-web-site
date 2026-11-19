@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { withBase } from "../../../utils/url";
 import tsKaigiImage from "../../../assets/TSKaigi.png";
 ---
 
@@ -7,10 +8,10 @@ import tsKaigiImage from "../../../assets/TSKaigi.png";
   <Image src={tsKaigiImage} alt={"TSKaigiロゴ画像"} height={31} />
   <ul>
     <li>
-      <a href="/side-event/">サイドイベント</a>
+      <a href={withBase("/side-event/")}>サイドイベント</a>
     </li>
     <li>
-      <a href="/code-of-conduct/">行動規範</a>
+      <a href={withBase("/code-of-conduct/")}>行動規範</a>
     </li>
   </ul>
 </header>

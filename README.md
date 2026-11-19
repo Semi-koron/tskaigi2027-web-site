@@ -20,7 +20,8 @@
 - Node.js：26.13.1以上
 - pnpm：パッケージ管理
 - Prettier / prettier-plugin-astro：コード整形
-- Husky / lint-staged：コミット時に変更ファイルを自動整形
+- ESLint（typescript-eslint / eslint-plugin-astro / eslint-plugin-react-hooks）：静的解析
+- Husky / lint-staged：コミット時に変更ファイルを ESLint で自動修正し、Prettier で整形
 
 ## ディレクトリ構成
 
@@ -78,6 +79,14 @@ pnpm dev --background
 開発サーバーの停止は `pnpm astro dev stop`、状態確認は `pnpm astro dev status`、ログ確認は `pnpm astro dev logs` で行えます。
 
 ビルドは `pnpm build`、ビルド結果の確認は `pnpm preview`、コード整形は `pnpm format` を実行します。
+
+CI と同じチェックは以下で実行できます。
+
+```sh
+pnpm format:check # 整形されているか
+pnpm lint         # ESLint
+pnpm check        # 型チェック（astro check）
+```
 
 ## テスト方針
 

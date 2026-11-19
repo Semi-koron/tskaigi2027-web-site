@@ -1,4 +1,6 @@
 ---
+import { NOINDEX } from "astro:env/server";
+import { withBase } from "../utils/url";
 import "../styles/global.css";
 import { Font } from "astro:assets";
 import Header from "../components/features/Header/index.astro";
@@ -10,8 +12,9 @@ import Footer from "../components/features/Footer/index.astro";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href={withBase("/favicon.ico")} />
     <meta name="generator" content={Astro.generator} />
+    {NOINDEX && <meta name="robots" content="noindex, nofollow" />}
     <title>TSkaigi 2027 ティザーサイト</title>
     <Font cssVariable="--font-outfit" preload />
   </head>
