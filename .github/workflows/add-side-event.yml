@@ -1,0 +1,121 @@
+name: Add side event
+
+# サイドイベント追加のissue（.github/ISSUE_TEMPLATE/side-event.yml）から，
+# src/constants/sideEvents.jsonにイベントを追加するPRを作る．
+on:
+  issues:
+    types: [opened, edited]
+
+permissions: {}
+
+concurrency:
+  group: add-side-event-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  add-side-event:
+    # ラベルではなくタイトルか本文の見出しで判定する（Slackのワークフローなどからの起票にも対応）．
+    # クローズ済み（掲載済み）のissueを編集しても，掲載中のデータを書き換えるPRは作らない
+    if: >-
+      github.event.issue.state == 'open' &&
+      (startsWith(github.event.issue.title, 'サイドイベント追加') ||
+      contains(github.event.issue.body, '## ConnpassイベントURL'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # PR用ブランチへのpush
+      pull-requests: write # PRの作成
+      issues: write # issueへのコメント
+    # PATを扱うジョブなので，ActionはタグではなくコミットSHAで固定する
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # 書き込み権限のあるtokenを.git/configに残さず，後続のpnpm installなどから読めないようにする．
+          # PR用ブランチへのpushはcreate-pull-requestが自分のtokenで認証する
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          version: 12
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Add side event
+        id: add
+        env:
+          # issueの本文は信頼できない入力なので，スクリプトに直接展開せず環境変数で渡す
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: node scripts/add-side-event/index.ts
+
+      - name: Format
+        run: pnpm exec prettier --write src/constants/sideEvents.json
+
+      - name: Type check
+        run: pnpm check
+
+      - name: Create pull request
+        id: cpr
+        uses: peter-evans/create-pull-request@3ffccacd46053766916f087ce41d627c0b8cf2d1 # v8.1.3
+        with:
+          # GITHUB_TOKENで作ったPRでは他のワークフロー（CIなど）が動かないため，PATが登録されていればそちらを使う
+          token: ${{ secrets.SIDE_EVENT_PR_TOKEN || github.token }}
+          add-paths: src/constants/sideEvents.json
+          branch: side-event/issue-${{ github.event.issue.number }}
+          delete-branch: true
+          commit-message: "feat:サイドイベントを追加 - ${{ steps.add.outputs.name }}"
+          title: "feat:サイドイベントを追加 - ${{ steps.add.outputs.name }}"
+          body: |
+            ## 概要
+
+            #${{ github.event.issue.number }}からサイドイベントを追加します。
+
+            ## 追加するイベント
+
+            - **イベント名**: ${{ steps.add.outputs.name }}
+            - **開催日**: ${{ steps.add.outputs.date }}
+            - **終了日時**: ${{ steps.add.outputs.finishedAt }}（終了時刻が未入力の場合は開催日の翌日0:00）
+            - **URL**: ${{ steps.add.outputs.link }}
+
+            内容を修正する場合は、このPRではなく #${{ github.event.issue.number }}を編集してください。issueを編集すると、このPRは作り直され、PRを直接編集した内容は上書きされます。
+
+            ---
+
+            このPRは自動生成されました。内容を確認してからマージしてください。
+
+            Closes #${{ github.event.issue.number }}
+
+      - name: Comment on issue
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_URL: ${{ steps.cpr.outputs.pull-request-url }}
+        run: >-
+          gh issue comment "${{ github.event.issue.number }}"
+          --repo "${{ github.repository }}"
+          --body "✅ サイドイベントを追加するPRを作成しました。レビューしてマージしてください。 ${PR_URL}"
+
+      - name: Comment failure on issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ERRORS: ${{ steps.add.outputs.errors }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          {
+            echo "⚠️ サイドイベントを追加するPRを作成できませんでした。"
+            if [ -n "${ERRORS}" ]; then
+              echo
+              echo "以下の入力内容を修正してください（issueを編集すると再実行されます）。"
+              echo
+              echo "${ERRORS}"
+            fi
+            echo
+            echo "実行ログ: ${RUN_URL}"
+          } > "${RUNNER_TEMP}/comment.md"
+          gh issue comment "${{ github.event.issue.number }}" \
+            --repo "${{ github.repository }}" \
+            --body-file "${RUNNER_TEMP}/comment.md"
