@@ -1,0 +1,84 @@
+---
+import { Image } from "astro:assets";
+import externalLinkIcon from "../../../assets/icons/external-link.svg";
+import type { SideEvent } from "../../../schemas/sideEvent";
+import {
+  formatSideEventDate,
+  isSideEventClosed,
+} from "../../../utils/sideEvent";
+import ClosedBadge from "../islands/ClosedBadge";
+import styles from "./index.module.css";
+
+type Props = SideEvent;
+
+const { date, name, link, thumbnail, detail, tags, sponsors, finishedAt } =
+  Astro.props;
+const { monthDay, weekday } = formatSideEventDate(date);
+const closedAtBuild = isSideEventClosed(finishedAt, new Date());
+---
+
+<div class={styles["item"]}>
+  <h2 class={styles["date"]}>
+    <span class={styles["monthDay"]}>{monthDay}</span>
+    <span class={styles["weekday"]}>{weekday}</span>
+  </h2>
+  <hr class={styles["divider"]} />
+  <div class={styles["content"]}>
+    {/* ClosedBadgeは未終了だと何も描画しない．client:visibleだと監視する要素がなくhydrateされないためclient:idleにする */}
+    <h3 class={styles["heading"]}>
+      <a href={link} target="_blank" rel="noopener" class={styles["title"]}>
+        {name}
+        <Image
+          src={externalLinkIcon}
+          alt="（新しいタブで開きます）"
+          class={styles["externalLinkIcon"]}
+        />
+      </a>
+      <ClosedBadge
+        client:idle
+        finishedAt={finishedAt}
+        closedAtBuild={closedAtBuild}
+      />
+    </h3>
+    <div class={styles["body"]}>
+      <div class={styles["primary"]}>
+        <a href={link} target="_blank" rel="noopener">
+          <img
+            src={thumbnail}
+            alt={name}
+            width="800"
+            height="600"
+            loading="lazy"
+            decoding="async"
+            class={styles["thumbnail"]}
+          />
+        </a>
+        <p
+          class:list={[styles["detail"], styles["detailNarrow"]]}
+          set:text={detail}
+        />
+        {tags && tags.length > 0 && (
+          <div class={styles["tags"]}>
+            {tags.map((tag) => (
+              <p class={styles["tag"]}># {tag}</p>
+            ))}
+          </div>
+        )}
+      </div>
+      <div class={styles["secondary"]}>
+        <p
+          class:list={[styles["detail"], styles["detailWide"]]}
+          set:text={detail}
+        />
+        <p class={styles["sponsors"]}>
+          主催:{" "}
+          {sponsors.map((sponsor, i) => (
+            <span class={styles["sponsor"]}>
+              {i < sponsors.length - 1 ? `${sponsor}、 ` : sponsor}
+            </span>
+          ))}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

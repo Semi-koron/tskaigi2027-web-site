@@ -1,0 +1,119 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SideEventItem from "../../components/features/SideEventItem/index.astro";
+import { sideEventList } from "../../constants/sideEventList";
+import { sortSideEventsByFinishedAtDesc } from "../../utils/sideEvent";
+
+const sideEvents = sortSideEventsByFinishedAtDesc(sideEventList);
+---
+
+<Layout>
+  <main>
+    <h1>サイドイベント</h1>
+    <div class="container">
+      <p class="lead">
+        TSKaigiのサイドイベントをご紹介します。ご参加お待ちしております！
+        <br />
+        <span class="note">
+          ※ 正確な情報は各イベントページをご確認ください。
+        </span>
+      </p>
+      {sideEvents.length > 0 ? (
+        <div class="list">
+          {sideEvents.map((sideEvent) => (
+            <SideEventItem {...sideEvent} />
+          ))}
+        </div>
+      ) : (
+        <p class="empty">公開されているサイドイベントはありません</p>
+      )}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    box-sizing: border-box;
+    flex: 1;
+    width: 100%;
+    padding: 4rem 0 2.5rem;
+    background-color: var(--color-blue-light-100);
+  }
+
+  h1 {
+    padding: 2.5rem 0;
+    color: var(--color-blue-light-500);
+    font-family: inherit;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 2rem;
+    text-align: center;
+  }
+
+  .container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: var(--color-white);
+  }
+
+  .lead,
+  .empty {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .note {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    main {
+      padding: 4rem 2rem;
+    }
+
+    h1 {
+      padding: 4rem 0;
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+
+    .container {
+      padding: 2rem;
+      border-radius: 0.75rem;
+    }
+
+    .lead,
+    .empty {
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+    }
+
+    .list {
+      gap: 0;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+
+    .container {
+      padding: 2.5rem;
+    }
+  }
+</style>
